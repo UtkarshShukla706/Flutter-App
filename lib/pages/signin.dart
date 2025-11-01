@@ -134,7 +134,7 @@ class _SignInState extends State<SignIn> {
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   prefixIcon: Icon(
-                                    Icons.password,size: 32,
+                                    Icons.password,
                                     color: Colors.deepPurple.shade300,
                                   ),
                                 ),
