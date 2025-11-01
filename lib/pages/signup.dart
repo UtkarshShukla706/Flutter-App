@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _SignInState extends State<SignIn> {
                 children: [
                   Center(
                     child: Text(
-                      'SignIn',
+                      'SignUp',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24.0,
@@ -49,7 +49,7 @@ class _SignInState extends State<SignIn> {
                   ),
                   Center(
                     child: Text(
-                      'Login to your account',
+                      'Create a new account',
                       style: TextStyle(
                         color: Color(0xFFbbb0ff),
                         fontSize: 18.0,
@@ -74,7 +74,7 @@ class _SignInState extends State<SignIn> {
                           vertical: 30.0,
                           horizontal: 20.0,
                         ),
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: MediaQuery.of(context).size.height / 1.6,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -83,6 +83,35 @@ class _SignInState extends State<SignIn> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              'Name',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 10.0),
+                            Container(
+                              padding: EdgeInsets.only(left: 10.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Colors.black38,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  prefixIcon: Icon(
+                                    Icons.people_outline,
+                                    color: Colors.deepPurple.shade300,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 10.0),
                             Text(
                               'Email',
                               style: TextStyle(
@@ -141,75 +170,94 @@ class _SignInState extends State<SignIn> {
                                 obscureText: true,
                               ),
                             ),
-
                             SizedBox(height: 10.0),
-
-                            Container(
-                              alignment: Alignment.bottomRight,
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            Text(
+                              'Confirm Password',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: 50.0),
-                            Center(
-                              // ignore: sized_box_for_whitespace
-                              child: Container(
-                                width: 130,
-                                child: Material(
-                                  elevation: 5.0,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: Center(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10.0),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF6380fb),
-                                        borderRadius: BorderRadius.circular(
-                                          10.0,
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'SignIn',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                            SizedBox(height: 10.0),
+                            Container(
+                              padding: EdgeInsets.only(left: 10.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: Colors.black38,
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  prefixIcon: Icon(
+                                    Icons.edit_outlined,
+                                    color: Colors.deepPurple.shade300,
                                   ),
                                 ),
+                                obscureText: true,
                               ),
+                            ),
+
+                            SizedBox(height: 30.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Don't have an account?",
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+
+                                Text(
+                                  ' SignUp Now!',
+                                  style: TextStyle(
+                                    color: Color(0xFF7f30fe),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 40.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: TextStyle(color: Colors.black54, fontSize: 16.0),
-                      ),
-
-                      Text(
-                        ' SignUp Now!',
-                        style: TextStyle(
-                          color: Color(0xFF7f30fe),
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.0,
+                  SizedBox(height: 20.0),
+                  Center(
+                    // ignore: sized_box_for_whitespace
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: Material(
+                        elevation: 5.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Center(
+                          child: Container(
+                            padding: EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF6380fb),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'SignIn',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
