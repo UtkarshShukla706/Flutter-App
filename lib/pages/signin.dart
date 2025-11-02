@@ -10,7 +10,9 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
+
       // ignore: avoid_unnecessary_containers
       body: Container(
         child: Stack(
@@ -198,7 +200,7 @@ class _SignInState extends State<SignIn> {
                     children: [
                       Text(
                         "Don't have an account?",
-                        style: TextStyle(color: Colors.black54, fontSize: 16.0),
+                         style: TextStyle(color: isDarkMode ? Colors.white : Colors.black54, fontSize: 16.0),
                       ),
 
                       Text(
