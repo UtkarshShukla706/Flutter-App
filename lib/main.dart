@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:newpro1/firebase_options.dart';
 
-// import 'package:newpro1/pages/signin.dart';
+import 'package:newpro1/pages/signin.dart';
 import 'package:newpro1/pages/signup.dart';
 
 void main() async {
@@ -35,6 +35,14 @@ class MyApp extends StatelessWidget {
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
+       darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: Brightness.dark,
+        ),
+      ),
+      themeMode: ThemeMode.system,
       home: SignUp(),
       //  home: SignIn(),
     );
