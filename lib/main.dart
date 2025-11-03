@@ -2,7 +2,8 @@ import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:newpro1/firebase_options.dart';
-import 'package:newpro1/pages/home.dart';
+import 'package:newpro1/pages/chatpage.dart';
+// import 'package:newpro1/pages/home.dart';
 
 // import 'package:newpro1/pages/signin.dart';
 // import 'package:newpro1/pages/signup.dart';
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       // home: Home(),
-       home: Home(),
+       home: Chatpage(),
     );
   }
 }
