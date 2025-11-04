@@ -106,67 +106,92 @@ class _ChatBubble extends StatelessWidget {
     required this.isSender,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    
-    return Align(
-      alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.7,
-        ),
-        padding: const EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          color: isSender ? const Color(0xFFfafbfd) : const Color.fromARGB(255, 211, 228, 243),
-          borderRadius: isSender
-              ? const BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                  bottomLeft: Radius.circular(10.0),
-                )
-              : const BorderRadius.only(
-                  bottomRight: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                  topLeft: Radius.circular(10.0),
-                ),
-        ),
-        child: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 16.0,
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
+ @override
+Widget build(BuildContext context) {
+  return Align(
+    alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
+    child: Container(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.7,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      decoration: BoxDecoration(
+        color: isSender
+            ? const Color(0xFF0078FF) // modern blue for sender
+            : const Color(0xFFE9EEF6), // light grey-blue for receiver
+        borderRadius: isSender
+            ? const BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
+                bottomLeft: Radius.circular(16.0),
+              )
+            : const BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
+                bottomRight: Radius.circular(16.0),
+              ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 16.0,
+          color: isSender ? Colors.white : Colors.black87,
+          fontWeight: FontWeight.w500,
+          height: 1.3,
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
 
 class _MessageInputField extends StatelessWidget {
   @override
+    @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-      color: Colors.white, 
-      child: SafeArea( 
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+       
         child: Row(
           children: [
-           
-            const Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Type a message...",
-                  border: InputBorder.none,
+            // Text Field
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    hintText: "Type a message...",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
+                  ),
+                  minLines: 1,
+                  maxLines: 4,
                 ),
               ),
             ),
-            
-            IconButton(
-              icon: const Icon(Icons.send),
-              onPressed: () {
-             
-              },
+
+            const SizedBox(width: 8),
+
+            // Send Button
+            Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFF0078FF), // Modern blue color
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.send, color: Colors.white),
+                onPressed: () {
+                  
+                },
+              ),
             ),
           ],
         ),
