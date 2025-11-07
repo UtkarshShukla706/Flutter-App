@@ -29,7 +29,7 @@ class _SignUpState extends State<SignUp> {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
            String id=randomAlphaNumeric(10);
-        // ignore: use_build_context_synchronously
+        
         Map<String, dynamic> userInfoMap = {
           "Name": namecontroller.text,
           "Email": emailcontroller.text,
@@ -54,6 +54,7 @@ class _SignUpState extends State<SignUp> {
           ),
         );
 
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Home()));
 
 

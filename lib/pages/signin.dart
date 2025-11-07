@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:newpro1/pages/home.dart';
+import 'package:newpro1/services/database.dart';
+import 'package:newpro1/services/share_pref.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -8,14 +13,63 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  String email="",password="",name="",pic="",username="",id="";
+  TextEditingController useremailController=TextEditingController();
+  TextEditingController userpasswordController=TextEditingController();
+
+  final _formkey=GlobalKey<FormState>();
+
+  userLogin() async {
+  try {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    QuerySnapshot querySnapshot = await DatabaseMethods().getUserbyemail(email);
+
+    if (querySnapshot.docs.isNotEmpty) { // Check if the list is not empty
+      name = '${querySnapshot.docs[0]['Name']}';
+      username = '${querySnapshot.docs[0]['username']}';
+      pic = '${querySnapshot.docs[0]['PhotoUrl']}';
+      id = querySnapshot.docs[0].id;
+
+      await SharedPreferencesHelper().saveUserDisplayName(name);
+      await SharedPreferencesHelper().saveUserEmail(email);
+      await SharedPreferencesHelper().saveUserPic(pic);
+      await SharedPreferencesHelper().saveUserName(username);
+      await SharedPreferencesHelper().saveUserId(id);
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Home()));
+    } else {
+      // Handle the case where no user data is found in Firestore for the given email
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User data not found.')),
+      );
+    }
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No user found for that email.')),
+      );
+    } else if (e.code == 'wrong-password') {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Wrong password provided for that user.')),
+      );
+    }
+  }
+}
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      // CHANGE 1: Wrapped the body in a SingleChildScrollView to prevent overflow.
+    
       body: SingleChildScrollView(
-        // ignore: avoid_unnecessary_containers
-        child: Container(
+        
+        child: SizedBox(
           child: Stack(
             children: [
               Container(
@@ -60,7 +114,7 @@ class _SignInState extends State<SignIn> {
                       ),
                     ),
                     SizedBox(height: 20.0),
-                    // CHANGE 2: Removed the Flexible widget for more natural positioning.
+                    
                     Container(
                       margin: EdgeInsets.symmetric(
                         vertical: 20.0,
@@ -74,127 +128,155 @@ class _SignInState extends State<SignIn> {
                             vertical: 30.0,
                             horizontal: 20.0,
                           ),
-                          // CHANGE 3: Removed fixed height to make the card responsive to its content.
+                          
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Email',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(height: 10.0),
-                              Container(
-                                padding: EdgeInsets.only(left: 10.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: Colors.black38,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    prefixIcon: Icon(
-                                      Icons.mail_outline,
-                                      color: Color(0xFF7f30fe),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // CHANGE 5: Adjusted spacing to better match the UI image.
-                              SizedBox(height: 20.0),
-                              Text(
-                                'Password',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(height: 10.0),
-                              Container(
-                                padding: EdgeInsets.only(left: 10.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 1.0,
-                                    color: Colors.black38,
-                                  ),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    prefixIcon: Icon(
-                                      Icons.password,
-                                      color: Color(0xFF7f30fe),
-                                    ),
-                                  ),
-                                  obscureText: true,
-                                ),
-                              ),
-                              SizedBox(height: 10.0),
-                              Container(
-                                alignment: Alignment.bottomRight,
-                                child: Text(
-                                  'Forgot Password?',
+                          child: Form(
+                            key: _formkey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email',
                                   style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16.0,
+                                    fontSize: 18.0,
                                     fontWeight: FontWeight.w500,
+                                    color: Colors.black,
                                   ),
                                 ),
-                              ),
-                              // CHANGE 4: Replaced Spacer with SizedBox for consistent spacing.
-                              SizedBox(height: 50.0),
-                              Center(
-                                child: Container(
-                                 
-                                  width: 120,
-                                  child: Material(
-                                    elevation: 5.0,
-                                    // Change Made: Increased borderRadius for a more rounded, pill-like shape
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    child: Container(
-                                      // Change Made: Increased vertical padding for a taller, more prominent button
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 8.0,
-                                        
+                                SizedBox(height: 10.0),
+                                Container(
+                                  padding: EdgeInsets.only(left: 10.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 1.0,
+                                      color: Colors.black38,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: TextFormField(
+                                    controller: useremailController,
+                                    validator: (value){
+                                      if(value==null || value.isEmpty){
+                                        return 'Please enter your email';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.mail_outline,
+                                        color: Color(0xFF7f30fe),
                                       ),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFF6380fb),
-                                        // Change Made: Matched the borderRadius to the Material widget
+                                    ),
+                                  ),
+                                ),
+                               
+                                SizedBox(height: 20.0),
+                                Text(
+                                  'Password',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: 10.0),
+                                Container(
+                                  padding: EdgeInsets.only(left: 10.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      width: 1.0,
+                                      color: Colors.black38,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: TextFormField(
+                                    controller: userpasswordController,
+                                    validator: (value){
+                                      if(value==null || value.isEmpty){
+                                        return 'Please enter your password';
+                                      }
+                                      return null;
+                                    },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.password,
+                                        color: Color(0xFF7f30fe),
+                                      ),
+                                    ),
+                                    obscureText: true,
+                                  ),
+                                ),
+                                SizedBox(height: 10.0),
+                                Container(
+                                  alignment: Alignment.bottomRight,
+                                  child: Text(
+                                    'Forgot Password?',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                               
+                                SizedBox(height: 50.0),
+                                GestureDetector(
+                                  onTap: (){
+                                    if(_formkey.currentState!.validate()){
+                                      setState(() {
+                                        email=useremailController.text;
+                                        password=userpasswordController.text;
+                                      });
+                                      userLogin();
+                                    }
+                                  },
+                                  child: Center(
+                                    child: SizedBox(
+                                     
+                                      width: 120,
+                                      child: Material(
+                                        elevation: 5.0,
+                                       
                                         borderRadius: BorderRadius.circular(30.0),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Login',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.bold,
+                                        child: Container(
+                                       
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                            
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF6380fb),
+                                           
+                                            borderRadius: BorderRadius.circular(30.0),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              'Login',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
+                                    ), 
                                   ),
-                                ), 
-                              ),
-                            ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 20.0), // Adjusted spacing
+                    SizedBox(height: 20.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -215,7 +297,7 @@ class _SignInState extends State<SignIn> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.0), // Added padding at the bottom
+                    SizedBox(height: 20.0), 
                   ],
                 ),
               ),
