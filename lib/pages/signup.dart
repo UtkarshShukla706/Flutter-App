@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newpro1/pages/home.dart';
+
+import 'package:newpro1/pages/signin.dart';
 import 'package:newpro1/services/database.dart';
 import 'package:newpro1/services/share_pref.dart';
 import 'package:random_string/random_string.dart';
@@ -21,29 +22,35 @@ class _SignUpState extends State<SignUp> {
 
   final _formKey = GlobalKey<FormState>();
 
-   registration() async {
+  registration() async {
     // ignore: unnecessary_null_comparison
-    if (password!=null &&password == confirmpassword) {
+    if (password != null && password == confirmpassword) {
       try {
         // ignore: unused_local_variable
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
-           String id=randomAlphaNumeric(10);
-        
+        String id = randomAlphaNumeric(10);
+
         Map<String, dynamic> userInfoMap = {
           "Name": namecontroller.text,
           "Email": emailcontroller.text,
-          "username":emailcontroller.text.replaceAll("@gmail.com",""),
-          "PhotoUrl":"https://www.hiclipart.com/free-transparent-background-png-clipart-pfjjr",
-          "id":id
+          "username": emailcontroller.text.replaceAll("@gmail.com", ""),
+          "PhotoUrl":
+              "https://www.hiclipart.com/free-transparent-background-png-clipart-pfjjr",
+          "id": id,
         };
         await DatabaseMethods().addUserDetails(userInfoMap, id);
         await SharedPreferencesHelper().saveUserId(id);
-        await SharedPreferencesHelper().saveUserDisplayName(namecontroller.text);
+        await SharedPreferencesHelper().saveUserDisplayName(
+          namecontroller.text,
+        );
         await SharedPreferencesHelper().saveUserEmail(emailcontroller.text);
-        await SharedPreferencesHelper().saveUserPic("https://www.hiclipart.com/free-transparent-background-png-clipart-pfjjr");
-        await SharedPreferencesHelper().saveUserName(emailcontroller.text.replaceAll("@gmail.com",""));
-
+        await SharedPreferencesHelper().saveUserPic(
+          "https://www.hiclipart.com/free-transparent-background-png-clipart-pfjjr",
+        );
+        await SharedPreferencesHelper().saveUserName(
+          emailcontroller.text.replaceAll("@gmail.com", ""),
+        );
 
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -55,10 +62,10 @@ class _SignUpState extends State<SignUp> {
         );
 
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Home()));
-
-
-       
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => SignIn()),
+        );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           // ignore: use_build_context_synchronously
@@ -84,7 +91,7 @@ class _SignUpState extends State<SignUp> {
       }
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -313,62 +320,74 @@ class _SignUpState extends State<SignUp> {
                                         fontSize: 16.0,
                                       ),
                                     ),
-                                    GestureDetector(
-                                      // Added GestureDetector to make "SignIn" tappable
-                                      onTap: () {
-                                        // Add navigation to SignIn page here
-                                      },
-                                      child: Text(
-                                        'SignIn',
-                                        style: TextStyle(
-                                          color: Color(0xFF7f30fe),
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.0,
+                                    MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => SignIn(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'SignIn',
+                                          style: TextStyle(
+                                            color: Color(0xFF7f30fe),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16.0,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ],
                                 ),
                                 SizedBox(height: 20.0),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        name = namecontroller.text;
-                                        email = emailcontroller.text;
-                                        password = passwordcontroller.text;
-                                        confirmpassword =
-                                            conpasswordcontroller.text;
-                                      });
-                                      registration();
-                                    }
-                                  },
-                                  child: Center(
-                                    child: SizedBox(
-                                      width: 120,
-                                      child: Material(
-                                        elevation: 5.0,
-                                        // Change Made: Increased borderRadius for a more rounded, pill-like shape
-                                        borderRadius: BorderRadius.circular(30.0),
-                                        child: Container(
-                                          // Change Made: Increased vertical padding for a taller, more prominent button
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 8.0,
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        setState(() {
+                                          name = namecontroller.text;
+                                          email = emailcontroller.text;
+                                          password = passwordcontroller.text;
+                                          confirmpassword =
+                                              conpasswordcontroller.text;
+                                        });
+                                        registration();
+                                      }
+                                    },
+                                    child: Center(
+                                      child: SizedBox(
+                                        width: 120,
+                                        child: Material(
+                                          elevation: 5.0,
+                                          // Change Made: Increased borderRadius for a more rounded, pill-like shape
+                                          borderRadius: BorderRadius.circular(
+                                            30.0,
                                           ),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF6380fb),
-                                            // Change Made: Matched the borderRadius to the Material widget
-                                            borderRadius: BorderRadius.circular(
-                                              30.0,
+                                          child: Container(
+                                            // Change Made: Increased vertical padding for a taller, more prominent button
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 8.0,
                                             ),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              'Submit',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18.0,
-                                                fontWeight: FontWeight.bold,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFF6380fb),
+                                              // Change Made: Matched the borderRadius to the Material widget
+                                              borderRadius: BorderRadius.circular(
+                                                30.0,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'Submit',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18.0,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                               ),
                                             ),
                                           ),
