@@ -74,7 +74,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0A0E27),
+      // backgroundColor: Color(0xFF0A0E27),
+       backgroundColor: Color.fromARGB(255, 0, 1, 7),
       body: SingleChildScrollView(
 
         child: SafeArea(
