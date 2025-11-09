@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:newpro1/firebase_options.dart';
 import 'package:newpro1/pages/coverpage.dart';
 // import 'package:newpro1/pages/signin.dart';
-import 'package:newpro1/pages/signup.dart';
+// import 'package:newpro1/pages/signup.dart';
 // import 'package:newpro1/pages/chatpage.dart';
 // import 'package:newpro1/pages/home.dart';
 // import 'package:newpro1/pages/signin.dart';

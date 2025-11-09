@@ -97,7 +97,8 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0A0E27), // Dark navy background
+      backgroundColor: Color(0xFF0A0E27),
+      //  backgroundColor: Color.fromARGB(255, 0, 1, 7), // Dark navy background
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -109,51 +110,67 @@ class _SignUpState extends State<SignUp> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header Section
-                Center(
-                  child: Column(
-                  children: [
-                    Text(
+                Column(
+                children: [
+                   Center(
+                    child: Text(
                     "Let's Get Started!",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 28.0,
                       fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2,
                     ),
                     textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 8.0),
-                    RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: TextStyle(color: Colors.white70, fontSize: 14.0),
-                      children: [
-                      TextSpan(
-                        text: "Create your account and start chatting with your AI assistants.",
-                      ),
-                      ],
-                    ),
-                    ),
-                  ],
                   ),
+                  SizedBox(height: 8.0),
+                  Center(
+                      child: Text(
+                        "Create your account and start chatting",
+                        style: TextStyle(
+                          color: Color(0xFFB0B0B0),
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                
+                ],
                 ),
                 SizedBox(height: 30.0),
 
                 // Form Container
                 Container(
-                  padding: EdgeInsets.all(24.0),
+                  padding: EdgeInsets.symmetric(vertical:30.0,horizontal:20.0),
                   decoration: BoxDecoration(
-                    color: Color(0xFFE8FF3B), // Bright yellow/lime
-                    borderRadius: BorderRadius.circular(20.0),
+                   color: const Color(0xFF1A1F3A),
+                  borderRadius: BorderRadius.circular(20.0),
                   ),
                   child: Form(
                     key: _formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const Text(
+                              'Name',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
                         // Name Field
                         Container(
+                          padding: const EdgeInsets.only(left: 10.0),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.0),
+                             border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(0xFF2A2F4A),
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: const Color(0xFF252A42),
                           ),
                           child: TextFormField(
                             controller: namecontroller,
@@ -163,33 +180,49 @@ class _SignUpState extends State<SignUp> {
                               }
                               return null;
                             },
+                            style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: 'Enter your name',
-                              hintStyle: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontSize: 14.0,
-                              ),
+                              border: InputBorder.none,
+                                  hintText: 'Enter your Name',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFF5A5F7A),
+                                    fontSize: 14.0,
+                                  ),
                               prefixIcon: Icon(
                                 Icons.person_outline,
-                                color: Colors.black,
+                                color:  Color(0xFFE8FF00),
                                 size: 20.0,
                               ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 16.0,
-                              ),
+                              
+                              // contentPadding: EdgeInsets.symmetric(
+                              //   horizontal: 16.0,
+                              //   vertical: 16.0,
+                              // ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 16.0),
+                        SizedBox(height: 12.0),
+                        const Text(
+                              'Email',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
 
                         // Email Field
                         Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
+                          padding: const EdgeInsets.only(left: 10.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(0xFF2A2F4A),
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: const Color(0xFF252A42),
+                              ),
                           child: TextFormField(
                             controller: emailcontroller,
                             validator: (value) {
@@ -198,33 +231,48 @@ class _SignUpState extends State<SignUp> {
                               }
                               return null;
                             },
+                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: 'Enter your email',
-                              hintStyle: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontSize: 14.0,
-                              ),
+                              hintText: 'Enter your Email',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFF5A5F7A),
+                                    fontSize: 14.0,
+                                  ),
                               prefixIcon: Icon(
                                 Icons.email_outlined,
-                                color: Colors.black,
+                                color: Color(0xFFE8FF00),
                                 size: 20.0,
                               ),
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16.0,
-                                vertical: 16.0,
-                              ),
+                              // contentPadding: EdgeInsets.symmetric(
+                              //   horizontal: 16.0,
+                              //   vertical: 16.0,
+                              // ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 16.0),
+                        SizedBox(height: 12.0),
+                         const Text(
+                              'Password',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
 
                         // Password Field
                         Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
+                          padding: const EdgeInsets.only(left: 10.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(0xFF2A2F4A),
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: const Color(0xFF252A42),
+                              ),
                           child: TextFormField(
                             controller: passwordcontroller,
                             obscureText: _obscurePassword,
@@ -234,15 +282,16 @@ class _SignUpState extends State<SignUp> {
                               }
                               return null;
                             },
+                            style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
                               hintText: 'Enter your password',
-                              hintStyle: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontSize: 14.0,
-                              ),
+                                  hintStyle: TextStyle(
+                                    color: Color(0xFF5A5F7A),
+                                    fontSize: 14.0,
+                                  ),
                               prefixIcon: Icon(
                                 Icons.lock_outline,
-                                color: Colors.black,
+                                color: Color(0xFFE8FF00),
                                 size: 20.0,
                               ),
                               suffixIcon: IconButton(
@@ -250,7 +299,7 @@ class _SignUpState extends State<SignUp> {
                                   _obscurePassword
                                       ? Icons.visibility_off_outlined
                                       : Icons.visibility_outlined,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   size: 20.0,
                                 ),
                                 onPressed: () {
@@ -267,14 +316,28 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 16.0),
+                        SizedBox(height: 12.0),
 
                         // Confirm Password Field
+                        const Text(
+                              'Confirm Password',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 8.0),
                         Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
+                          padding: const EdgeInsets.only(left: 10.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1.0,
+                                  color: const Color(0xFF2A2F4A),
+                                ),
+                                borderRadius: BorderRadius.circular(10.0),
+                                color: const Color(0xFF252A42),
+                              ),
                           child: TextFormField(
                             controller: conpasswordcontroller,
                             obscureText: _obscureConfirmPassword,
@@ -284,15 +347,16 @@ class _SignUpState extends State<SignUp> {
                               }
                               return null;
                             },
+                             style: const TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: 'Confirm your password',
-                              hintStyle: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontSize: 14.0,
-                              ),
+                             hintText: 'Confirm your password',
+                                  hintStyle: const TextStyle(
+                                    color: Color(0xFF5A5F7A),
+                                    fontSize: 14.0,
+                                  ),
                               prefixIcon: Icon(
                                 Icons.lock_outline,
-                                color: Colors.black,
+                                color:  Color(0xFFE8FF00),
                                 size: 20.0,
                               ),
                               suffixIcon: IconButton(
@@ -300,7 +364,7 @@ class _SignUpState extends State<SignUp> {
                                   _obscureConfirmPassword
                                       ? Icons.visibility_off_outlined
                                       : Icons.visibility_outlined,
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   size: 20.0,
                                 ),
                                 onPressed: () {
@@ -321,24 +385,24 @@ class _SignUpState extends State<SignUp> {
                         SizedBox(height: 12.0),
 
                         // Remember Me & Forgot Password Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // Add forgot password logic
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Color(0xFF0A0E27),
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         // Add forgot password logic
+                        //       },
+                        //       child: Text(
+                        //         'Forgot Password?',
+                        //         style: TextStyle(
+                        //           color: Colors.white,
+                        //           fontSize: 13.0,
+                        //           fontWeight: FontWeight.w600,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         SizedBox(height: 24.0),
 
                         // Sign In Button
@@ -360,14 +424,14 @@ class _SignUpState extends State<SignUp> {
                               width: double.infinity,
                               padding: EdgeInsets.symmetric(vertical: 16.0),
                               decoration: BoxDecoration(
-                                color: Color(0xFF0A0E27),
+                                color:  Color(0xFFE8FF00),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Center(
                                 child: Text(
                                   'Register',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Color(0xFF0A0E27),
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -385,7 +449,7 @@ class _SignUpState extends State<SignUp> {
                             Text(
                               "Already have an account? ",
                               style: TextStyle(
-                                color: Color(0xFF0A0E27),
+                               color: Color(0xFFB0B0B0),
                                 fontSize: 14.0,
                               ),
                             ),
@@ -403,9 +467,9 @@ class _SignUpState extends State<SignUp> {
                                 child: Text(
                                   'Sign In',
                                   style: TextStyle(
-                                    color: Color(0xFF0A0E27),
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.bold,
+                                     color: Color(0xFFE8FF00),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14.0,
                                   ),
                                 ),
                               ),
@@ -415,133 +479,133 @@ class _SignUpState extends State<SignUp> {
                         SizedBox(height: 20.0),
 
                         // Divider with "Or continue with"
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                color: Color(0xFF0A0E27),
-                                thickness: 1.0,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 12.0),
-                              child: Text(
-                                'Or continue with',
-                                style: TextStyle(
-                                  color: Color(0xFF0A0E27),
-                                  fontSize: 13.0,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                color: Color(0xFF0A0E27),
-                                thickness: 1.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0),
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: Divider(
+                        //         color: Color(0xFF2A2F4A),
+                        //         thickness: 1.0,
+                        //       ),
+                        //     ),
+                        //     Padding(
+                        //       padding: EdgeInsets.symmetric(horizontal: 12.0),
+                        //       child: Text(
+                        //         'Or continue with',
+                        //         style: TextStyle(
+                        //           color:  Color(0xFF808080),
+                        //           fontSize: 13.0,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     Expanded(
+                        //       child: Divider(
+                        //         color: Color(0xFF0A0E27),
+                        //         thickness: 1.0,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(height: 20.0),
 
                         // Social Login Buttons
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 12.0),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF0A0E27),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.g_mobiledata,
-                                      color: Colors.white,
-                                      size: 24.0,
-                                    ),
-                                    SizedBox(width: 8.0),
-                                    Text(
-                                      'Google',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 12.0),
-                            Expanded(
-                              child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 12.0),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF0A0E27),
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.facebook,
-                                      color: Colors.white,
-                                      size: 20.0,
-                                    ),
-                                    SizedBox(width: 8.0),
-                                    Text(
-                                      'Facebook',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0),
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: Container(
+                        //         padding: EdgeInsets.symmetric(vertical: 12.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Color(0xFFE8FF00),
+                        //           borderRadius: BorderRadius.circular(12.0),
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Icon(
+                        //               Icons.g_mobiledata,
+                        //              color: Color(0xFF0A0E27),
+                        //               size: 24.0,
+                        //             ),
+                        //             SizedBox(width: 8.0),
+                        //             Text(
+                        //               'Google',
+                        //               style: TextStyle(
+                        //                 color: Colors.white,
+                        //                 fontSize: 14.0,
+                        //                 fontWeight: FontWeight.w600,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 12.0),
+                        //     Expanded(
+                        //       child: Container(
+                        //         padding: EdgeInsets.symmetric(vertical: 12.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Color(0xFFE8FF00),
+                        //           borderRadius: BorderRadius.circular(12.0),
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Icon(
+                        //               Icons.facebook,
+                        //               color: Color(0xFF0A0E27),
+                        //               size: 20.0,
+                        //             ),
+                        //             SizedBox(width: 8.0),
+                        //             Text(
+                        //               'Facebook',
+                        //               style: TextStyle(
+                        //                   color: Colors.white,
+                        //                 fontSize: 14.0,
+                        //                 fontWeight: FontWeight.w600,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // SizedBox(height: 20.0),
 
                         // Terms and Privacy
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                // Terms of Service action
-                              },
-                              child: Text(
-                                'Terms of Service',
-                                style: TextStyle(
-                                  color: Color(0xFF0A0E27),
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 24.0),
-                            GestureDetector(
-                              onTap: () {
-                                // Privacy Policy action
-                              },
-                              child: Text(
-                                'Privacy Policy',
-                                style: TextStyle(
-                                  color: Color(0xFF0A0E27),
-                                  fontSize: 13.0,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         // Terms of Service action
+                        //       },
+                        //       child: Text(
+                        //         'Terms of Service',
+                        //         style: TextStyle(
+                        //           color: Color(0xFFE8FF00),
+                        //           fontSize: 13.0,
+                        //           fontWeight: FontWeight.w600,
+                        //           decoration: TextDecoration.underline,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 24.0),
+                        //     GestureDetector(
+                        //       onTap: () {
+                        //         // Privacy Policy action
+                        //       },
+                        //       child: Text(
+                        //         'Privacy Policy',
+                        //         style: TextStyle(
+                        //            color: Color(0xFFE8FF00),
+                        //           fontSize: 13.0,
+                        //           fontWeight: FontWeight.w600,
+                        //           decoration: TextDecoration.underline,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

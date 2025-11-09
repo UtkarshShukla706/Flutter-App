@@ -20,6 +20,7 @@ class _SignInState extends State<SignIn> {
   bool agreeToTerms = false;
 
   final _formkey = GlobalKey<FormState>();
+   bool _obscurePassword = true;
   
 
   userLogin() async {
@@ -34,7 +35,7 @@ class _SignInState extends State<SignIn> {
       );
 
       if (querySnapshot.docs.isNotEmpty) {
-        // Check if the list is not empty
+        
         name = '${querySnapshot.docs[0]['Name']}';
         username = '${querySnapshot.docs[0]['username']}';
         pic = '${querySnapshot.docs[0]['PhotoUrl']}';
@@ -74,8 +75,8 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color(0xFF0A0E27),
-       backgroundColor: Color.fromARGB(255, 0, 1, 7),
+      backgroundColor: Color(0xFF0A0E27),
+      //  backgroundColor: Color.fromARGB(255, 0, 1, 7),
       body: SingleChildScrollView(
 
         child: SafeArea(
@@ -198,21 +199,35 @@ class _SignInState extends State<SignIn> {
                                   return null;
                                 },
                                 style: const TextStyle(color: Colors.white),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Enter your password',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     color: Color(0xFF5A5F7A),
                                     fontSize: 14.0,
                                   ),
-                                  prefixIcon: Icon(
+                                  prefixIcon: const Icon(
                                     Icons.lock_outline,
                                     color: Color(0xFFE8FF00),
                                     size: 20.0,
                                   ),
+                                  suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscurePassword
+                                      ? Icons.visibility_off_outlined
+                                      : Icons.visibility_outlined,
+                                  color: Colors.white,
+                                  size: 20.0,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscurePassword = !_obscurePassword;
+                                  });
+                                },
+                              ),
                                   
                                 ),
-                                obscureText: true,
+                                obscureText: _obscurePassword,
                               ),
                             ),
                             const SizedBox(height: 45.0),
