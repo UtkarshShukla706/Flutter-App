@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newpro1/pages/signin.dart';
+import 'package:newpro1/pages/terms.dart';
 
 class Coverpage extends StatefulWidget {
   const Coverpage({super.key});
@@ -48,7 +49,7 @@ class _CoverpageState extends State<Coverpage> {
               ),
               SizedBox(height: 48.0),
 
-              // 4. Get Started Button
+              
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Color(0xFF0A0E27), backgroundColor: const Color(0xFFE8FF00),
@@ -70,7 +71,7 @@ class _CoverpageState extends State<Coverpage> {
               // 5. Terms & Conditions
               TextButton(
                 onPressed: () {
-                  // Handle terms and conditions press
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Terms()));
                 },
                 child: Text(
                   'Terms & Conditions',
