@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-// The main screen of the application.
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -11,153 +10,363 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    // The Scaffold provides the main layout structure.
     return Scaffold(
-      // The background color of the screen, visible behind the white container.
-      backgroundColor: const Color(0xFF553370),
-      
-      // Using a standard AppBar for the top section.
+      backgroundColor: const Color(0xFF0A0E27),
       appBar: AppBar(
-        // The title of the app.
+        backgroundColor: const Color(0xFF0A0E27),
         title: const Text(
-          "ChatUp",
+          "Chat AI",
           style: TextStyle(
-            color: Color(0xffc199cd),
-            fontSize: 22.0,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
-        // Setting the AppBar color to match the design.
-        backgroundColor: const Color(0xFF553370),
-        // Removing the shadow below the AppBar for a flat design.
-        elevation: 0,
-        // Adding the search icon to the actions section of the AppBar.
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: const Color(0xff3a2144),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: const Icon(Icons.search, color: Color(0xffc199cd)),
+          Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+            decoration: BoxDecoration(
+              color: Colors.amber,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: const Row(
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Colors.white,
+                  size: 16.0,
+                ),
+                SizedBox(width: 4.0),
+                Text(
+                  "Pro",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
+        elevation: 0,
       ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Chat, History, Setting Tabs
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Changed for better spacing
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurpleAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      // Reduced horizontal padding to prevent overflow
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10.0),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.chat_bubble, color: Colors.white),
+                        SizedBox(width: 8.0),
+                        Text("Chat", style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.grey),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      // Reduced horizontal padding
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10.0),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.history, color: Colors.white),
+                        SizedBox(width: 8.0),
+                        Text("History", style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.grey),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      // Reduced horizontal padding
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 10.0),
+                    ),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.settings, color: Colors.white),
+                        SizedBox(width: 8.0),
+                        Text("Setting", style: TextStyle(color: Colors.white)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24.0),
 
-      // The body of the Scaffold now contains the chat list.
-      // It automatically fills the remaining screen space.
-      body: const _ChatList(),
-    );
-  }
-}
+              // Suggestions Section
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Suggestions",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  // TextButton(
+                  //   onPressed: () {},
+                  //   child: const Text(
+                  //     "View all",
+                  //     style: TextStyle(color: Colors.amber),
+                  //   ),
+                  // ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              SizedBox(
+                height: 180,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildSuggestionCard(
+                      color: Colors.orange,
+                      title: "Write an UI/UX design",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion1.png',
+                    ),
+                    const SizedBox(width: 16.0),
+                    _buildSuggestionCard(
+                      color: Colors.deepPurpleAccent,
+                      title: "Write an Article",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion2.png',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24.0),
+               SizedBox(
+                height: 180,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildSuggestionCard(
+                      color: Colors.orange,
+                      title: "Write an UI/UX design",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion1.png',
+                    ),
+                    const SizedBox(width: 16.0),
+                    _buildSuggestionCard(
+                      color: Colors.deepPurpleAccent,
+                      title: "Write an Article",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion2.png',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24.0),
+               SizedBox(
+                height: 180,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildSuggestionCard(
+                      color: Colors.orange,
+                      title: "Write an UI/UX design",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion1.png',
+                    ),
+                    const SizedBox(width: 16.0),
+                    _buildSuggestionCard(
+                      color: Colors.deepPurpleAccent,
+                      title: "Write an Article",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion2.png',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24.0),
+               SizedBox(
+                height: 180,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildSuggestionCard(
+                      color: Colors.orange,
+                      title: "Write an UI/UX design",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion1.png',
+                    ),
+                    const SizedBox(width: 16.0),
+                    _buildSuggestionCard(
+                      color: Colors.deepPurpleAccent,
+                      title: "Write an Article",
+                      subtitle:
+                          "Lorem Ipsum is simply dummy text of the printing and",
+                      imagePath: 'assets/suggestion2.png',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24.0),
 
-/// A widget for the white container that holds the scrollable chat list.
-class _ChatList extends StatelessWidget {
-  const _ChatList();
-
-  @override
-  Widget build(BuildContext context) {
-    // This Container creates the white area with rounded top corners.
-    // Because it's the Scaffold's body, it will fill all available space.
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
+              // Prompt Library Section
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     const Text(
+              //       "Prompt library",
+              //       style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: 20.0,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //     TextButton(
+              //       onPressed: () {},
+              //       child: const Text(
+              //         "View all",
+              //         style: TextStyle(color: Colors.amber),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 16.0),
+              // Wrap(
+              //   spacing: 12.0,
+              //   runSpacing: 12.0,
+              //   children: [
+              //     _buildPromptChip("🎨 Graphic Design"),
+              //     _buildPromptChip("⚡ Midjourney"),
+              //     _buildPromptChip("🖌️ UI/UX Design"),
+              //     _buildPromptChip("😍 3D Arts"),
+              //     _buildPromptChip("🚀 Seo"),
+              //   ],
+              // ),
+            ],
+          ),
         ),
       ),
-      // ListView makes the chat list scrollable if there are many items.
-      child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-        children: const [
-          // Reusable widgets for each chat item.
-          _ChatItem(
-            imagePath: "images/to.jpg",
-            name: "Utkarsh Shukla",
-            lastMessage: "Hello my name is ...",
-            time: "04:30 PM",
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "You have 2 free message left. Get Premium",
+              style: TextStyle(color: Colors.grey),
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Ask ai chat anything",
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                      filled: true,
+                      fillColor: const Color(0xFF1A1F3A),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+                FloatingActionButton(
+                  onPressed: () {},
+                  backgroundColor: Colors.deepPurpleAccent,
+                  child: const Icon(Icons.send, color: Colors.white),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSuggestionCard({
+    required Color color,
+    required String title,
+    required String subtitle,
+    required String imagePath,
+  }) {
+    return Container(
+      width: 150,
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0,
+            ),
           ),
-          SizedBox(height: 20.0), // Spacing between chat items.
-          _ChatItem(
-            imagePath: "images/mo.jpg",
-            name: "Ved Prakash",
-            lastMessage: "How Are You ...",
-            time: "04:30 PM",
+          const SizedBox(height: 8.0),
+          Text(
+            subtitle,
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 12.0,
+            ),
+          ),
+          
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Image.network('https://placehold.co/100x60',
+                fit: BoxFit.cover),
           ),
         ],
       ),
     );
   }
-}
 
-/// A reusable widget for a single item in the chat list.
-class _ChatItem extends StatelessWidget {
-  final String imagePath;
-  final String name;
-  final String lastMessage;
-  final String time;
-
-  const _ChatItem({
-    required this.imagePath,
-    required this.name,
-    required this.lastMessage,
-    required this.time,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(30), // Circular border for the image
-          child: Image.asset(
-            imagePath,
-            height: 40,
-            width: 40,
-            fit: BoxFit.cover,
-          ),
-        ),
-        const SizedBox(width: 10.0),
-        // Using Expanded to make the column of text take up available space,
-        // which helps the Spacer push the time to the edge correctly.
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                name,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 17.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                lastMessage,
-                style: const TextStyle(
-                  color: Colors.black45,
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-        // The time is aligned to the right.
-        Text(
-          time,
-          style: const TextStyle(
-            color: Colors.black45,
-            fontSize: 14.0,
-            fontWeight: FontWeight.w500,
-          ),
-        )
-      ],
-    );
-  }
+  // Widget _buildPromptChip(String label) {
+  //   return Chip(
+  //     label: Text(label, style: const TextStyle(color: Colors.white)),
+  //     backgroundColor: const Color(0xFF1A1F3A),
+  //     padding: const EdgeInsets.symmetric( vertical: 12.0),
+  //   );
+  // }
 }
