@@ -56,7 +56,7 @@ class _CoverpageState extends State<Coverpage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  padding: EdgeInsets.symmetric(vertical: 25.0),
                 ),
                 onPressed: () {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignIn()));
@@ -66,19 +66,26 @@ class _CoverpageState extends State<Coverpage> {
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 18.0),
 
               // 5. Terms & Conditions
-              TextButton(
+              ElevatedButton(
+                 style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white, backgroundColor: const Color(0xFF0A0E27),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 25.0),
+                ),
                 onPressed: () {
                 Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Terms()));
                 },
                 child: Text(
                   'Terms & Conditions',
                   style: TextStyle(
-                    color: Colors.white,
+                    
                     fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     decoration: TextDecoration.underline,
                   ),
                 ),
