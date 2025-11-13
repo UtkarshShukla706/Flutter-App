@@ -13,23 +13,27 @@ class _HomeState extends State<Home> {
     final suggestions = [
       {
         "color": Colors.orange,
-        "title": "Write an UI/UX design",
-        "image": 'images/cp2.png',
+        "title": "Sofi",
+        "subtitles":"Sweet, lovable, girlfriend-type personality",
+        "image": 'images/sofi.png',
       },
       {
-        "color": Colors.deepPurpleAccent,
-        "title": "Write an Article",
-        "image": 'images/cp2.png',
+        "color": const Color.fromARGB(255, 126, 89, 228),
+        "title": "Momo",
+        "subtitles":"Shy, clumsy, energetic, motivational, lovable",
+        "image": 'images/momo.png',
       },
       {
         "color": Colors.pinkAccent,
-        "title": "Summarize a Topic",
-        "image": 'images/cp2.png',
+        "title": "Arin",
+        "subtitles":"Intelligent, handsome, brother-like advisor",
+        "image": 'images/arin.png',
       },
       {
-        "color": Colors.blue,
-        "title": "Translate Language",
-        "image": 'images/cp2.png',
+        "color": const Color.fromARGB(255, 2, 101, 182),
+        "title": "Blade",
+        "subtitles":"Martial artist, self-defence expert",
+        "image": 'images/blade.png',
       },
     ];
     return Scaffold(
@@ -164,7 +168,7 @@ class _HomeState extends State<Home> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 16.0,
                   mainAxisSpacing: 16.0,
-                  childAspectRatio: 0.8,
+                  childAspectRatio: 0.60,
                 ),
                 itemCount: 4,
                 shrinkWrap: true,
@@ -174,12 +178,12 @@ class _HomeState extends State<Home> {
                     color: suggestions[index]["color"] as Color,
                     title: suggestions[index]["title"] as String,
                     subtitle:
-                        "Lorem Ipsum is simply dummy text of the printing and",
+                        suggestions[index]["subtitles"] as String,
                     imagePath: suggestions[index]["image"] as String,
                   );
                 },
               ),
-              // --- MODIFICATION END ---
+             
             ],
           ),
         ),
@@ -187,42 +191,80 @@ class _HomeState extends State<Home> {
     );
   }
 
+  
+
   Widget _buildSuggestionCard({
-    required Color color,
-    required String title,
-    required String subtitle,
-    required String imagePath,
-  }) {
-    return Container(
-      // width: 150, // <-- THIS LINE WAS REMOVED
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0,
+  required Color color,
+  required String title,
+  required String subtitle,
+  required String imagePath,
+}) {
+  return Container(
+    padding: const EdgeInsets.all(16.0),
+    decoration: BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(20.0),
+    ),
+    child: LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Title
+            Text(
+              title,
+              
+              style: const TextStyle(
+                
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Text(
-            subtitle,
-            style: const TextStyle(color: Colors.white70, fontSize: 12.0),
-          ),
-          const Spacer(), // Use Spacer to push the image to the bottom
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Image.asset(imagePath, fit: BoxFit.cover,height: 50.0,),
-          ),
-        ],
-      ),
-    );
-  }
+
+            const SizedBox(height: 6),
+
+            // Subtitle takes all remaining space safely
+            Expanded(
+              child: Text(
+                subtitle,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 16,
+                ),
+                maxLines: 5,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+
+           
+           
+
+            // Image ALWAYS fits — NEVER overflows
+            Expanded(
+              child: SizedBox(
+                height: 250,
+                
+                // height: constraints.maxHeight * 0.22, // 22% of card height
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                  height: 125.0,
+                  alignment: AlignmentGeometry.bottomCenter,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    ),
+  );
+}
+
+
+
 }
