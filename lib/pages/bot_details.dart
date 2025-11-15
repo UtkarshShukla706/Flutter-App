@@ -61,7 +61,26 @@ class BotDetails extends StatelessWidget {
                 ),
               ),
             ),
-            // ElevatedButton(onPressed: onPressed, child: child)
+            SizedBox(height: 48.0),
+
+              
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Color(0xFF0A0E27), backgroundColor: const Color(0xFFE8FF00),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 25.0,horizontal: 30.0),
+                ),
+                onPressed: () {
+                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignIn()));
+                },
+                child: Text(
+                  'Get Started',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+                ),
+              ),
+            
           ],
         ),
       ),
