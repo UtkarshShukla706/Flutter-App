@@ -56,7 +56,7 @@ class _CoverpageState extends State<Coverpage> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 25.0),
+                  padding: EdgeInsets.symmetric(vertical: 25.0,horizontal: 30.0),
                 ),
                 onPressed: () {
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignIn()));
