@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:newpro1/pages/chatpage.dart';
+
 import 'package:newpro1/pages/home.dart';
 
 class BotDetails extends StatelessWidget {
@@ -27,7 +29,7 @@ class BotDetails extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context)=>Home())
+            MaterialPageRoute(builder: (context)=> Home())
           ),
         ),
       ),
@@ -73,7 +75,17 @@ class BotDetails extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 25.0,horizontal: 30.0),
                 ),
                 onPressed: () {
-                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignIn()));
+                  // <-- 2. ADD THIS NAVIGATION LOGIC
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChatPage(
+                        
+                        characterName: title.toLowerCase(), 
+                        characterImage: imagePath,        
+                      ),
+                    ),
+                  );
                 },
                 child: Text(
                   'Get Started',
@@ -87,3 +99,4 @@ class BotDetails extends StatelessWidget {
     );
   }
 }
+
