@@ -1,8 +1,10 @@
 import 'package:device_preview_plus/device_preview_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:newpro1/firebase_options.dart';
 import 'package:newpro1/pages/coverpage.dart';
+import 'package:newpro1/pages/home.dart';
 // import 'package:newpro1/pages/signin.dart';
 // import 'package:newpro1/pages/signup.dart';
 // import 'package:newpro1/pages/chatpage.dart';
@@ -17,6 +19,7 @@ void main() async {
    await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await dotenv.load(fileName: ".env");
 
   
 
