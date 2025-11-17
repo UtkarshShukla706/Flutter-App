@@ -1,4 +1,4 @@
-// lib/pages/chatpage.dart
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -8,14 +8,15 @@ import '../services/database.dart';
 
 
 class ChatPage extends StatefulWidget {
-  final String characterName; // e.g., "sofi"
-  final String characterImage; // e.g., "images/sofi.png"
+  final String characterName;
+  final String characterImage;
 
+  
   const ChatPage({
-    Key? key,
+    super.key,
     required this.characterName,
     required this.characterImage,
-  }) : super(key: key);
+  });
 
   @override
   // ignore: library_private_types_in_public_api
@@ -99,9 +100,11 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: const Color(0xFF0A0E27),
       appBar: AppBar(
+        backgroundColor: const Color(0xFF0A0E27),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context)=> Home())
           ),
@@ -111,8 +114,12 @@ class _ChatPageState extends State<ChatPage> {
             CircleAvatar(
               backgroundImage: AssetImage(widget.characterImage),
             ),
-            const SizedBox(width: 10),
-            Text(widget.characterName.toUpperCase()),
+            const SizedBox(width: 12),
+            Text(widget.characterName.toUpperCase(),style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Colors.white, 
+                fontSize: 16.0, 
+              ),),
           ],
         ),
       ),
@@ -126,59 +133,89 @@ class _ChatPageState extends State<ChatPage> {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text("No messages yet."));
+                  return const Center(child: Text("No messages yet.",style: TextStyle(
+                        color: Color(0xFFB0B0B0), 
+                        fontSize: 14.0, 
+                      ),));
                 }
                 if(snapshot.hasError) {
-                   return const Center(child: Text("Error fetching messages."));
+                   return const Center(child: Text("Error fetching messages.",style: TextStyle(
+                        color: Color(0xFFB0B0B0),
+                        fontSize: 14.0, 
+                      ),));
                 }
                 final messages = snapshot.data!.docs;
                 return ListView.builder(
                   reverse: true,
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     final message = messages[index].data() as Map<String, dynamic>;
                     final isUser = message['sender'] == 'user';
-                    return ListTile(
-                      title: Align(
+                    return 
+                       Align(
                         alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
                         child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 4.0),
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: isUser ? Colors.blue[100] : Colors.grey[300],
+                            color: isUser ? const Color(0xFFE8FF00) : const Color(0xFF1A1F3A),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Text(message['text']),
+                          child: Text(message['text'],style: TextStyle(
+                            color: isUser ? const Color(0xFF0A0E27) : Colors.white, 
+                            fontSize: 14.0, 
+                            fontWeight: FontWeight.w400, 
+                          ),),
                         ),
-                      ),
-                    );
+                      );
+                    
                   },
                 );
               },
             ),
           ),
-          if (_isLoading) const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: CircularProgressIndicator(),
-          ),
+          // if (_isLoading) const Padding(
+          //   padding: EdgeInsets.all(8.0),
+          //   child: CircularProgressIndicator(),
+          // ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _textController,
+                    style: const TextStyle( 
+                            fontWeight: FontWeight.w500, color: Colors.white, fontSize: 14.0),
                     decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 20.0),
+                       filled: true,
+                      fillColor: const Color(0xFF252A42),
                       hintText: 'Type a message...',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(color: Color(0xFF2A2F4A)), 
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(color: Color(0xFFE8FF00)), 
                       ),
                     ),
                     onSubmitted: (_) => _sendMessage(),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: _sendMessage,
+                SizedBox(width: 8.0),
+                 Material(
+                  color: const Color(0xFFE8FF00), 
+                  borderRadius: BorderRadius.circular(30),
+                  child: IconButton(
+                    icon: const Icon(Icons.send, color: Color(0xFF0A0E27)), 
+                    onPressed: _sendMessage,
+                  ),
                 ),
               ],
             ),
