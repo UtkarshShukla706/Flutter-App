@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:newpro1/pages/home.dart';
+import 'package:newpro1/services/extensioncase.dart';
 import 'package:newpro1/services/gemini_services.dart';
 import '../services/database.dart';
 
@@ -135,7 +136,7 @@ class _ChatPageState extends State<ChatPage> {
               backgroundImage: AssetImage(widget.characterImage),
             ),
             const SizedBox(width: 12),
-            Text(widget.characterName.toUpperCase(),style: const TextStyle(
+            Text(widget.characterName.toTitleCase(),style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 color: Colors.white, 
                 fontSize: 16.0, 
