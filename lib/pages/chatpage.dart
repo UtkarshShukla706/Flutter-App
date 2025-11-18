@@ -164,7 +164,7 @@ class _ChatPageState extends State<ChatPage> {
                         SizedBox(width: 8),
                         Text(
                           'Clear Chat',
-                          style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: 12.0),
+                          style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: 16.0),
                         ),
                       ],
                     ),
