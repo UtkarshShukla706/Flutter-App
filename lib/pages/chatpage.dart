@@ -87,7 +87,7 @@ class _ChatPageState extends State<ChatPage> {
         );
       }
     } finally {
-      // 5. IMPORTANT: Ensure loading is always turned off
+     // Ensure loading is always turned off
       if(mounted) {
         setState(() {
           _isLoading = false;
@@ -96,6 +96,26 @@ class _ChatPageState extends State<ChatPage> {
       debugPrint("Finished _sendMessage and reset loading state.");
     }
   }
+
+    void _clearChat() async {
+    try {
+      await _databaseMethods.clearChatHistory(widget.characterName.toLowerCase());
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Chat cleared successfully.')),
+        );
+      }
+    } catch (e) {
+      debugPrint("Error clearing chat: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to clear chat: $e')),
+        );
+      }
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -122,6 +142,38 @@ class _ChatPageState extends State<ChatPage> {
               ),),
           ],
         ),
+        actions: [
+          PopupMenuTheme(
+            data: PopupMenuThemeData(color: Colors.black),
+            child: PopupMenuButton<String>(
+              icon: const Icon(Icons.more_vert, color: Colors.white),
+              onSelected: (value) {
+                if (value == 'clear_chat') {
+                  _clearChat();
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem<String>(
+                    
+                    value: 'clear_chat',
+                    
+                    child: Row(
+                      children: [
+                        Icon(Icons.delete_outline, color: Colors.red),
+                        SizedBox(width: 8),
+                        Text(
+                          'Clear Chat',
+                          style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold,fontSize: 12.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ];
+              },
+            ),
+          ),
+        ],
       ),
       body: Column(
         children: [

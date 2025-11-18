@@ -63,5 +63,31 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
         .orderBy('timestamp')
         .get();
   }
+
+    // ADDED: The new clear chat function
+  Future<void> clearChatHistory(String characterName) async {
+   
+    if (userId == null) {
+    
+      return;
+    }
+
+    final messagesCollection = FirebaseFirestore.instance
+        .collection('chats')
+        .doc(userId)
+        .collection(characterName);
+
+    final querySnapshot = await messagesCollection.get();
+
+    // 4. Use a WriteBatch to delete all documents efficiently in a single operation
+    final batch = FirebaseFirestore.instance.batch();
+    for (var doc in querySnapshot.docs) {
+      batch.delete(doc.reference);
+    }
+
+    // 5. Commit the batch to apply the deletions
+    await batch.commit();
+  }
+   
 }
 
