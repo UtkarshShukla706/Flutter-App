@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newpro1/pages/bot_details.dart';
+import 'package:newpro1/pages/stat_page.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -104,7 +105,9 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>StatsPage()));
+                    },
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(color: Colors.grey),
                       shape: RoundedRectangleBorder(
@@ -163,7 +166,7 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(height: 16.0),
 
-              // --- MODIFICATION START: Replaced ListView with GridView ---
+             
               GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
