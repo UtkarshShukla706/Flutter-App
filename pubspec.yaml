@@ -32,6 +32,7 @@ dependencies:
   google_generative_ai: ^0.4.7
   flutter_dotenv: ^6.0.0
   fl_chart: ^1.1.1
+  animated_text_kit: ^4.3.0
 
 dev_dependencies:
   flutter_test:
