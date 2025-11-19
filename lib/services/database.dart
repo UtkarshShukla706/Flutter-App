@@ -88,6 +88,24 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
     // 5. Commit the batch to apply the deletions
     await batch.commit();
   }
+
+   Future<void> updateBotUsage(String characterName, String imagePath) async {
+    if (userId == null) return;
+
+    final docRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('stats') // Sub-collection to track stats
+        .doc(characterName); // Use character name as ID (e.g., 'sofi')
+
+    // Use SetOptions(merge: true) to create the doc if it doesn't exist
+    await docRef.set({
+      'count': FieldValue.increment(1), // Atomic increment (adds 1 safely)
+      'botName': characterName,
+      'botImage': imagePath, // Saving the asset path (e.g., "assets/sofi.png")
+      'lastUsed': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+  }
    
 }
 

@@ -48,6 +48,11 @@ class _ChatPageState extends State<ChatPage> {
       );
       debugPrint("User message saved.");
 
+      await _databaseMethods.updateBotUsage(
+        widget.characterName.toLowerCase(), 
+        widget.characterImage
+      );
+
      
       debugPrint("Fetching chat history...");
       final querySnapshot = await _databaseMethods.getChatHistoryAsFuture(widget.characterName.toLowerCase());
