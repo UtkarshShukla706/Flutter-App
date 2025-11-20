@@ -114,6 +114,41 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
       print("Error in signOutUser: $e");
     }
   }
+
+  
+  Future<void> deleteUserAccount() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) return;
+
+    try {
+     
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .delete();
+
+     
+      await FirebaseFirestore.instance
+          .collection("chats")
+          .doc(user.uid)
+          .delete();
+
+      
+      await user.delete();
+      
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+       
+        print('The user must re-authenticate before this operation can be executed.');
+        rethrow; 
+      } else {
+        print('Error deleting user from Auth: $e');
+      }
+    } catch (e) {
+      print('General error deleting user: $e');
+    }
+  }
    
 }
 
