@@ -184,6 +184,20 @@ class _HomeState extends State<Home> {
                     (route) => false,
                   );
                   break;
+
+                case 'Delete':
+                 await DatabaseMethods().deleteUserAccount();
+
+                  
+                  if (!context.mounted) return;
+
+               
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignIn()),
+                    (route) => false,
+                  );
+                break;
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -227,6 +241,19 @@ class _HomeState extends State<Home> {
                     ), // Red to indicate exit
                     SizedBox(width: 10),
                     Text('Log Out', style: TextStyle(color: Colors.redAccent)),
+                  ],
+                ),
+              ),
+               const PopupMenuItem<String>(
+                value: 'Delete',
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete,
+                      color: Colors.redAccent,
+                    ), // Red to indicate exit
+                    SizedBox(width: 10),
+                    Text('Delete Account', style: TextStyle(color: Colors.redAccent)),
                   ],
                 ),
               ),
