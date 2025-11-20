@@ -1,4 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newpro1/pages/bot_details.dart';
 import 'package:newpro1/pages/stat_page.dart';
@@ -11,6 +13,86 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  String name="...";
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   getnameload();
+  // }
+  //  getnameload() async {
+  //   // Get the current User ID
+  //   User? user = FirebaseAuth.instance.currentUser;
+
+  //   if (user != null) {
+  //     // Go to collection "users", find document with user.uid
+  //     DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
+  //         .collection("users")
+  //         .doc(user.uid)
+  //         .get();
+
+  //     if (docSnapshot.exists) {
+  //       setState(() {
+  //         // 4. Update the name. "Name" must match the key in your database screenshot
+  //          name = docSnapshot.get("Name");
+           
+  //       });
+  //     }
+  //   }
+  // }
+   @override
+  void initState() {
+    super.initState();
+   
+    getMyNameFromDatabase();
+  }
+
+  // 3. The logic to get the name
+  Future<void> getMyNameFromDatabase() async {
+    try {
+      // Get the current logged-in user
+      User? currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser == null) {
+        print("ERROR: No user is logged in.");
+        return;
+      }
+
+      // Print to Console (Run tab) to help debug
+      print("Fetching data for User ID: ${currentUser.uid}");
+
+      // Go to 'users' collection -> Document (UserID)
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUser.uid)
+          .get();
+
+      // Check if document exists
+      if (doc.exists) {
+        // Get the data
+        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+        
+        // Check if 'Name' field exists (Matches your screenshot)
+        if (data != null && data.containsKey("Name")) {
+          setState(() {
+            name = data["Name"]; // Update the screen
+          });
+          print("SUCCESS: Name found: $name");
+        } else {
+          print("ERROR: Document exists, but 'Name' field is missing.");
+        }
+      } else {
+        print("ERROR: No document found in 'users' collection for this ID.");
+      }
+    } catch (e) {
+      print("CRITICAL ERROR: $e");
+    }
+  }
+
+   
+  
+
+
   @override
   Widget build(BuildContext context) {
     final suggestions = [
@@ -281,11 +363,12 @@ class _HomeState extends State<Home> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AnimatedTextKit(
+                        key: ValueKey(name),
                         repeatForever: false,
                         isRepeatingAnimation: false,
                         animatedTexts: [
                           TyperAnimatedText(
-                            "Good Day , User 👋",
+                            "Good Day , $name 👋",
                             textStyle: TextStyle(
                               color: Colors.black,
                               fontSize: 22.0,
