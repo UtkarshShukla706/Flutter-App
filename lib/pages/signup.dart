@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:newpro1/pages/signin.dart';
 import 'package:newpro1/services/database.dart';
 import 'package:newpro1/services/share_pref.dart';
-import 'package:random_string/random_string.dart';
+// import 'package:random_string/random_string.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -31,7 +31,7 @@ class _SignUpState extends State<SignUp> {
         // ignore: unused_local_variable
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
-        String id = randomAlphaNumeric(10);
+        String id = userCredential.user!.uid; 
 
         Map<String, dynamic> userInfoMap = {
           "Name": namecontroller.text,
