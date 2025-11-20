@@ -106,6 +106,14 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
       'lastUsed': FieldValue.serverTimestamp(),
     }, SetOptions(merge: true));
   }
+
+  Future<void> signOutUser() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } catch (e) {
+      print("Error in signOutUser: $e");
+    }
+  }
    
 }
 

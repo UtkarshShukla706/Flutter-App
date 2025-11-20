@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newpro1/pages/bot_details.dart';
+import 'package:newpro1/pages/signin.dart';
 import 'package:newpro1/pages/stat_page.dart';
+import 'package:newpro1/services/database.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -13,8 +15,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-  String name="...";
+  String name = "...";
   // @override
   // void initState(){
   //   super.initState();
@@ -35,15 +36,15 @@ class _HomeState extends State<Home> {
   //       setState(() {
   //         // 4. Update the name. "Name" must match the key in your database screenshot
   //          name = docSnapshot.get("Name");
-           
+
   //       });
   //     }
   //   }
   // }
-   @override
+  @override
   void initState() {
     super.initState();
-   
+
     getMyNameFromDatabase();
   }
 
@@ -58,40 +59,32 @@ class _HomeState extends State<Home> {
         return;
       }
 
-      // Print to Console (Run tab) to help debug
-      print("Fetching data for User ID: ${currentUser.uid}");
+     
+     
 
-      // Go to 'users' collection -> Document (UserID)
+     
       DocumentSnapshot doc = await FirebaseFirestore.instance
           .collection("users")
           .doc(currentUser.uid)
           .get();
 
-      // Check if document exists
+     
       if (doc.exists) {
-        // Get the data
-        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
         
-        // Check if 'Name' field exists (Matches your screenshot)
+        Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+
+       
         if (data != null && data.containsKey("Name")) {
           setState(() {
-            name = data["Name"]; // Update the screen
+            name = data["Name"];
           });
-          print("SUCCESS: Name found: $name");
-        } else {
-          print("ERROR: Document exists, but 'Name' field is missing.");
-        }
-      } else {
-        print("ERROR: No document found in 'users' collection for this ID.");
-      }
+         
+        } 
+      } 
     } catch (e) {
       print("CRITICAL ERROR: $e");
     }
   }
-
-   
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +155,7 @@ class _HomeState extends State<Home> {
             ),
 
             color: const Color(0xFF1F2442),
-            onSelected: (value) {
+            onSelected: (value) async {
               switch (value) {
                 case 'dashboard':
                   Navigator.pushReplacement(
@@ -179,6 +172,17 @@ class _HomeState extends State<Home> {
                 case 'settings':
                   break;
                 case 'logout':
+                  await DatabaseMethods().signOutUser();
+
+                  
+                  if (!context.mounted) return;
+
+               
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignIn()),
+                    (route) => false,
+                  );
                   break;
               }
             },
@@ -352,10 +356,10 @@ class _HomeState extends State<Home> {
                     boxShadow: [
                       BoxShadow(
                         // ignore: deprecated_member_use
-                        color: Colors.black.withOpacity(0.25), 
+                        color: Colors.black.withOpacity(0.25),
                         blurRadius: 12,
-                        spreadRadius: 1, 
-                        offset: Offset(0, 6), 
+                        spreadRadius: 1,
+                        offset: Offset(0, 6),
                       ),
                     ],
                   ),
