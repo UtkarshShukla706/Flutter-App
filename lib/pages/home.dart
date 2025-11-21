@@ -3,9 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newpro1/pages/bot_details.dart';
-import 'package:newpro1/pages/signin.dart';
+import 'package:newpro1/pages/setting_page.dart';
 import 'package:newpro1/pages/stat_page.dart';
-import 'package:newpro1/services/database.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -170,34 +169,39 @@ class _HomeState extends State<Home> {
                 //   );
                 //   break;
                 case 'settings':
+                 Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingPage()),
+                  );
+
                   break;
-                case 'logout':
-                  await DatabaseMethods().signOutUser();
+                // case 'logout':
+                //   await DatabaseMethods().signOutUser();
 
                   
-                  if (!context.mounted) return;
+                //   if (!context.mounted) return;
 
                
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignIn()),
-                    (route) => false,
-                  );
-                  break;
+                //   Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => const SignIn()),
+                //     (route) => false,
+                //   );
+                //   break;
 
-                case 'Delete':
-                 await DatabaseMethods().deleteUserAccount();
+                // case 'Delete':
+                //  await DatabaseMethods().deleteUserAccount();
 
                   
-                  if (!context.mounted) return;
+                //   if (!context.mounted) return;
 
                
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignIn()),
-                    (route) => false,
-                  );
-                break;
+                //   Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => const SignIn()),
+                //     (route) => false,
+                //   );
+                // break;
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -231,32 +235,32 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-              const PopupMenuItem<String>(
-                value: 'logout',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.logout,
-                      color: Colors.redAccent,
-                    ), // Red to indicate exit
-                    SizedBox(width: 10),
-                    Text('Log Out', style: TextStyle(color: Colors.redAccent)),
-                  ],
-                ),
-              ),
-               const PopupMenuItem<String>(
-                value: 'Delete',
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.delete,
-                      color: Colors.redAccent,
-                    ), // Red to indicate exit
-                    SizedBox(width: 10),
-                    Text('Delete Account', style: TextStyle(color: Colors.redAccent)),
-                  ],
-                ),
-              ),
+              // const PopupMenuItem<String>(
+              //   value: 'logout',
+              //   child: Row(
+              //     children: [
+              //       Icon(
+              //         Icons.logout,
+              //         color: Colors.redAccent,
+              //       ), // Red to indicate exit
+              //       SizedBox(width: 10),
+              //       Text('Log Out', style: TextStyle(color: Colors.redAccent)),
+              //     ],
+              //   ),
+              // ),
+              //  const PopupMenuItem<String>(
+              //   value: 'Delete',
+              //   child: Row(
+              //     children: [
+              //       Icon(
+              //         Icons.delete,
+              //         color: Colors.redAccent,
+              //       ), // Red to indicate exit
+              //       SizedBox(width: 10),
+              //       Text('Delete Account', style: TextStyle(color: Colors.redAccent)),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ],
