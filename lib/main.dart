@@ -3,33 +3,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:newpro1/firebase_options.dart';
-import 'package:newpro1/pages/coverpage.dart';
-// import 'package:newpro1/pages/home.dart';
-// import 'package:newpro1/pages/signin.dart';
-// import 'package:newpro1/pages/signup.dart';
-// import 'package:newpro1/pages/chatpage.dart';
-// import 'package:newpro1/pages/home.dart';
-// import 'package:newpro1/pages/signin.dart';
-// import 'package:newpro1/pages/signup.dart';
-
-
+import 'package:newpro1/pages/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await dotenv.load(fileName: ".env");
 
-  
-
-  runApp(DevicePreview(
-    
-    builder: (context) => const MyApp(),
-  ));
+  runApp(DevicePreview(builder: (context) => const MyApp()));
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -42,10 +24,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Inter',
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-       darkTheme: ThemeData(
+      darkTheme: ThemeData(
         brightness: Brightness.dark,
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
@@ -53,10 +34,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system,
-      // home: Home(),
-       home: Coverpage(),
+      home: const SplashScreen(),
     );
   }
 }
-
-
