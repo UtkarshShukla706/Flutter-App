@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newpro1/pages/coverpage.dart';
+import 'package:newpro1/pages/home.dart';
+import 'package:newpro1/services/share_pref.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
@@ -52,11 +54,19 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    Timer(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const Coverpage()),
-      );
+    Timer(const Duration(seconds: 5), () async {
+      String? userId = await SharedPreferencesHelper().getUserId();
+      if (userId != null && userId.isNotEmpty) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Home()),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Coverpage()),
+        );
+      }
     });
   }
 
