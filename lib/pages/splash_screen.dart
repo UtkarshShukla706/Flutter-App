@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newpro1/pages/coverpage.dart';
+import 'package:newpro1/pages/signin.dart';
 import 'package:newpro1/pages/home.dart';
 import 'package:newpro1/services/share_pref.dart';
 import 'dart:async';
@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen>
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const Coverpage()),
+          MaterialPageRoute(builder: (context) => const SignIn()),
         );
       }
     });
