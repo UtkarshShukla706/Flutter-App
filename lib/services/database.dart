@@ -1,20 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:newpro1/services/share_pref.dart';
 
 class DatabaseMethods {
-  Future addUserDetails(Map<String,dynamic> userInfoMap,String id) async {
-   return await FirebaseFirestore.instance
+  Future addUserDetails(Map<String, dynamic> userInfoMap, String id) async {
+    return await FirebaseFirestore.instance
         .collection("users")
         .doc(id)
         .set(userInfoMap);
   }
 
-  Future<QuerySnapshot> getUserbyemail(String email)async{
+  Future<QuerySnapshot> getUserbyemail(String email) async {
     return FirebaseFirestore.instance
-    .collection("users").where("Email",isEqualTo: email).get();
+        .collection("users")
+        .where("Email", isEqualTo: email)
+        .get();
   }
 
-String? get userId => FirebaseAuth.instance.currentUser?.uid;
+  String? get userId => FirebaseAuth.instance.currentUser?.uid;
   // ADDED: Method to save a new chat message to Firestore.
   Future<void> saveMessage({
     required String characterName,
@@ -27,28 +30,29 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
     await FirebaseFirestore.instance
         .collection('chats') // A new top-level collection for chats
         .doc(userId) // A document for the current user
-        .collection(characterName) // A sub-collection for each character (e.g., 'sofi')
-        .add({ // Add the new message document
-      'text': text,
-      'sender': sender,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
+        .collection(
+          characterName,
+        ) // A sub-collection for each character (e.g., 'sofi')
+        .add({
+          // Add the new message document
+          'text': text,
+          'sender': sender,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
   }
 
-  
   Stream<QuerySnapshot> getChatHistory(String characterName) {
-    
     if (userId == null) return Stream.empty();
 
     return FirebaseFirestore.instance
         .collection('chats')
         .doc(userId)
         .collection(characterName)
-        .orderBy('timestamp', descending: true) 
-        .snapshots(); 
+        .orderBy('timestamp', descending: true)
+        .snapshots();
   }
 
-    // --- ADD THIS NEW METHOD ---
+  // --- ADD THIS NEW METHOD ---
   // This method gets the chat history just once, instead of listening for changes.
   // It's safer for fetching history before sending it to the API.
   Future<QuerySnapshot> getChatHistoryAsFuture(String characterName) {
@@ -64,11 +68,9 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
         .get();
   }
 
-    // ADDED: The new clear chat function
+  // ADDED: The new clear chat function
   Future<void> clearChatHistory(String characterName) async {
-   
     if (userId == null) {
-    
       return;
     }
 
@@ -89,7 +91,7 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
     await batch.commit();
   }
 
-   Future<void> updateBotUsage(String characterName, String imagePath) async {
+  Future<void> updateBotUsage(String characterName, String imagePath) async {
     if (userId == null) return;
 
     final docRef = FirebaseFirestore.instance
@@ -110,38 +112,36 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
   Future<void> signOutUser() async {
     try {
       await FirebaseAuth.instance.signOut();
+      await SharedPreferencesHelper().clearUserData();
     } catch (e) {
       print("Error in signOutUser: $e");
     }
   }
 
-  
   Future<void> deleteUserAccount() async {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user == null) return;
 
     try {
-     
       await FirebaseFirestore.instance
           .collection("users")
           .doc(user.uid)
           .delete();
 
-     
       await FirebaseFirestore.instance
           .collection("chats")
           .doc(user.uid)
           .delete();
 
-      
       await user.delete();
-      
+      await SharedPreferencesHelper().clearUserData();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'requires-recent-login') {
-       
-        print('The user must re-authenticate before this operation can be executed.');
-        rethrow; 
+        print(
+          'The user must re-authenticate before this operation can be executed.',
+        );
+        rethrow;
       } else {
         print('Error deleting user from Auth: $e');
       }
@@ -149,6 +149,4 @@ String? get userId => FirebaseAuth.instance.currentUser?.uid;
       print('General error deleting user: $e');
     }
   }
-   
 }
-
