@@ -6,6 +6,8 @@ class SharedPreferencesHelper {
   static String userEmailKey = "USEREMAILKEY";
   static String userPicKey = "USERPICKEY";
   static String displayNameKey = "USERDISPLAYNAME";
+  static String isFirstTimeKey = "ISFIRSTTIMEKEY";
+
   Future<bool> saveUserId(String getUserId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString(userIdKey, getUserId);
@@ -31,6 +33,11 @@ class SharedPreferencesHelper {
     return prefs.setString(displayNameKey, getUserDisplayName);
   }
 
+  Future<bool> saveIsFirstTime(bool isFirstTime) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool(isFirstTimeKey, isFirstTime);
+  }
+
   Future<String?> getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(userIdKey);
@@ -54,6 +61,11 @@ class SharedPreferencesHelper {
   Future<String?> getUserDisplayName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(displayNameKey);
+  }
+
+  Future<bool> getIsFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(isFirstTimeKey) ?? true;
   }
 
   Future<void> clearUserData() async {

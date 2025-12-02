@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newpro1/pages/signin.dart';
+import 'package:newpro1/pages/coverpage.dart';
 import 'package:newpro1/pages/home.dart';
 import 'package:newpro1/services/share_pref.dart';
 import 'dart:async';
@@ -56,10 +57,17 @@ class _SplashScreenState extends State<SplashScreen>
 
     Timer(const Duration(seconds: 5), () async {
       String? userId = await SharedPreferencesHelper().getUserId();
+      bool isFirstTime = await SharedPreferencesHelper().getIsFirstTime();
+
       if (userId != null && userId.isNotEmpty) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const Home()),
+        );
+      } else if (isFirstTime) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Coverpage()),
         );
       } else {
         Navigator.pushReplacement(
